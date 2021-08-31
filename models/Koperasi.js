@@ -31,32 +31,40 @@ module.exports = (sequelize, DataTypes) => {
       jenisKoperasi: DataTypes.STRING,
       kelompokKoperasi: DataTypes.STRING,
       sektorUsaha: DataTypes.STRING,
+      tglNonAktif: DataTypes.DATE,
+      ketNonAktif: DataTypes.STRING,
       tahunKepengurusan: DataTypes.STRING,
       ketuaKepengurusan: {
         type: DataTypes.STRING,
         get() {
-          return this.getDataValue("ketuaKepengurusan").split(";");
+          return JSON.parse(this.getDataValue("ketuaKepengurusan"));
         },
         set(val) {
-          return this.setDataValue("ketuaKepengurusan", val.join(";"));
+          return this.setDataValue("ketuaKepengurusan", JSON.stringify(val));
         },
       },
       bendaharaKepengurusan: {
         type: DataTypes.STRING,
         get() {
-          return this.getDataValue("bendaharaKepengurusan").split(";");
+          return JSON.parse(this.getDataValue("bendaharaKepengurusan"));
         },
         set(val) {
-          return this.setDataValue("bendaharaKepengurusan", val.join(";"));
+          return this.setDataValue(
+            "bendaharaKepengurusan",
+            JSON.stringify(val)
+          );
         },
       },
       sekretarisKepengurusan: {
         type: DataTypes.STRING,
         get() {
-          return this.getDataValue("sekretarisKepengurusan").split(";");
+          return JSON.parse(this.getDataValue("sekretarisKepengurusan"));
         },
         set(val) {
-          return this.setDataValue("sekretarisKepengurusan", val.join(";"));
+          return this.setDataValue(
+            "sekretarisKepengurusan",
+            JSON.stringify(val)
+          );
         },
       },
       tahunPengawasan: DataTypes.STRING,
@@ -64,10 +72,10 @@ module.exports = (sequelize, DataTypes) => {
       anggotaPengawasan: {
         type: DataTypes.STRING,
         get() {
-          return this.getDataValue("anggotaPengawasan").split(";");
+          return JSON.parse(this.getDataValue("anggotaPengawasan"));
         },
         set(val) {
-          return this.setDataValue("anggotaPengawasan", val.join(";"));
+          return this.setDataValue("anggotaPengawasan", JSON.stringify(val));
         },
       },
       SNIK: DataTypes.STRING,
@@ -86,10 +94,10 @@ module.exports = (sequelize, DataTypes) => {
       manager: {
         type: DataTypes.STRING,
         get() {
-          return this.getDataValue("manager").split(";");
+          return JSON.parse(this.getDataValue("manager"));
         },
         set(val) {
-          return this.setDataValue("manager", val.join(";"));
+          return this.setDataValue("manager", JSON.stringify(val));
         },
       },
       tglRAT: DataTypes.DATE,
@@ -130,28 +138,28 @@ module.exports = (sequelize, DataTypes) => {
       peraturanKhusus: {
         type: DataTypes.STRING,
         get() {
-          return this.getDataValue("peraturanKhusus").split(";");
+          return JSON.parse(this.getDataValue("peraturanKhusus"));
         },
         set(val) {
-          return this.setDataValue("peraturanKhusus", val.join(";"));
+          return this.setDataValue("peraturanKhusus", JSON.stringify(val));
         },
       },
       SOP: {
         type: DataTypes.STRING,
         get() {
-          return this.getDataValue("SOP").split(";");
+          return JSON.parse(this.getDataValue("SOP"));
         },
         set(val) {
-          return this.setDataValue("SOP", val.join(";"));
+          return this.setDataValue("SOP", JSON.stringify(val));
         },
       },
       SOM: {
         type: DataTypes.STRING,
         get() {
-          return this.getDataValue("SOM").split(";");
+          return JSON.parse(this.getDataValue("SOM"));
         },
         set(val) {
-          return this.setDataValue("SOM", val.join(";"));
+          return this.setDataValue("SOM", JSON.stringify(val));
         },
       },
       penilaian: DataTypes.STRING,

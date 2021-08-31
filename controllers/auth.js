@@ -19,6 +19,8 @@ exports.login = async (req, res) => {
       res.status(401).send({ message: "Invalid Login" });
       //if the user available then using bcrypt library for comparing the password that user input
     } else {
+      console.log(password, "password");
+      console.log(user.password, "user");
       bcrypt.compare(password, user.password, (err, result) => {
         if (result) {
           //if the request email and password match we allow user to sign in

@@ -12,7 +12,7 @@ exports.protected = async (req, res, next) => {
     ) {
       token = req.headers.authorization.split(" ")[1];
     }
-
+    console.log(token, "token");
     if (token) {
       //if token get make it to string
       const data = jwt.verify(token, process.env.JWT_SECRET);
@@ -30,6 +30,7 @@ exports.protected = async (req, res, next) => {
         next();
       }
     } else {
+      console.log("run this");
       res.status(401).send({ message: "you're unauthorized" });
     }
   } catch (error) {}

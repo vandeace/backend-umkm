@@ -63,6 +63,12 @@ module.exports = {
       sektorUsaha: {
         type: Sequelize.STRING,
       },
+      tglNonAktif: {
+        type: Sequelize.DATE,
+      },
+      ketNonAktif: {
+        type: Sequelize.STRING,
+      },
       tahunKepengurusan: {
         type: Sequelize.STRING,
       },

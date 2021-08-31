@@ -1,10 +1,11 @@
 const { Koperasi, User } = require("../models");
 const { Op } = require("sequelize");
+const bcrypt = require("bcrypt");
 
 exports.update = async (req, res) => {
   try {
+    const saltRounds = 10;
     const userId = req.user.id;
-    console.log(userId, "userId");
     const data = await User.findOne({
       where: { id: userId },
       attributes: {
@@ -12,9 +13,32 @@ exports.update = async (req, res) => {
       },
     });
     if (data) {
-      await User.update(req.body, {
-        where: { id: userId },
+      console.log(req.body, "body");
+
+      bcrypt.hash(req.body.password, saltRounds, async (err, hash) => {
+        const value = {
+          ...req.body,
+          password: hash,
+        };
+        const newUser = await User.update(value, {
+          where: { id: userId },
+        });
+
+        jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, (err, token) => {
+          const dataUser = {
+            id: newUser.id,
+            email: newUser.email,
+            role: newUser.role,
+            fullName: newUser.fullName,
+            token: token,
+          };
+          res.status(200).send(dataUser);
+        });
       });
+
+      // await User.update(req.body, {
+      //   where: { id: userId },
+      // });
     } else {
       res.status(404).send({ message: "Data Not Found" });
     }
