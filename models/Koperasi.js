@@ -1,7 +1,7 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Koperasi extends Model {
+  class koperasi extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,15 +9,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Koperasi.belongsTo(models.User);
+      koperasi.belongsTo(models.user);
     }
   }
-  Koperasi.init(
+  koperasi.init(
     {
       userId: DataTypes.INTEGER,
       namaKoperasi: DataTypes.STRING,
       nomorBadanHukum: DataTypes.STRING,
-      tanggalBadanHukum: DataTypes.DATE,
+      tanggalBadanHukum: DataTypes.STRING,
       jalan: DataTypes.STRING,
       rt: DataTypes.STRING,
       rw: DataTypes.STRING,
@@ -31,26 +31,26 @@ module.exports = (sequelize, DataTypes) => {
       jenisKoperasi: DataTypes.STRING,
       kelompokKoperasi: DataTypes.STRING,
       sektorUsaha: DataTypes.STRING,
-      tglNonAktif: DataTypes.DATE,
+      tglNonAktif: DataTypes.STRING,
       ketNonAktif: DataTypes.STRING,
       tahunKepengurusan: DataTypes.STRING,
       ketuaKepengurusan: {
         type: DataTypes.STRING,
         get() {
-          return JSON.parse(this.getDataValue("ketuaKepengurusan"));
+          return JSON.parse(this.getDataValue('ketuaKepengurusan'));
         },
         set(val) {
-          return this.setDataValue("ketuaKepengurusan", JSON.stringify(val));
+          return this.setDataValue('ketuaKepengurusan', JSON.stringify(val));
         },
       },
       bendaharaKepengurusan: {
         type: DataTypes.STRING,
         get() {
-          return JSON.parse(this.getDataValue("bendaharaKepengurusan"));
+          return JSON.parse(this.getDataValue('bendaharaKepengurusan'));
         },
         set(val) {
           return this.setDataValue(
-            "bendaharaKepengurusan",
+            'bendaharaKepengurusan',
             JSON.stringify(val)
           );
         },
@@ -58,11 +58,11 @@ module.exports = (sequelize, DataTypes) => {
       sekretarisKepengurusan: {
         type: DataTypes.STRING,
         get() {
-          return JSON.parse(this.getDataValue("sekretarisKepengurusan"));
+          return JSON.parse(this.getDataValue('sekretarisKepengurusan'));
         },
         set(val) {
           return this.setDataValue(
-            "sekretarisKepengurusan",
+            'sekretarisKepengurusan',
             JSON.stringify(val)
           );
         },
@@ -72,10 +72,10 @@ module.exports = (sequelize, DataTypes) => {
       anggotaPengawasan: {
         type: DataTypes.STRING,
         get() {
-          return JSON.parse(this.getDataValue("anggotaPengawasan"));
+          return JSON.parse(this.getDataValue('anggotaPengawasan'));
         },
         set(val) {
-          return this.setDataValue("anggotaPengawasan", JSON.stringify(val));
+          return this.setDataValue('anggotaPengawasan', JSON.stringify(val));
         },
       },
       SNIK: DataTypes.STRING,
@@ -94,13 +94,13 @@ module.exports = (sequelize, DataTypes) => {
       manager: {
         type: DataTypes.STRING,
         get() {
-          return JSON.parse(this.getDataValue("manager"));
+          return JSON.parse(this.getDataValue('manager'));
         },
         set(val) {
-          return this.setDataValue("manager", JSON.stringify(val));
+          return this.setDataValue('manager', JSON.stringify(val));
         },
       },
-      tglRAT: DataTypes.DATE,
+      tglRAT: DataTypes.STRING,
       modalSendiri: DataTypes.INTEGER,
       modalLuar: DataTypes.INTEGER,
       nilaiAset: DataTypes.INTEGER,
@@ -109,28 +109,28 @@ module.exports = (sequelize, DataTypes) => {
       diklat: {
         type: DataTypes.STRING,
         get() {
-          return JSON.parse(this.getDataValue("diklat"));
+          return JSON.parse(this.getDataValue('diklat'));
         },
         set(val) {
-          return this.setDataValue("diklat", JSON.stringify(val));
+          return this.setDataValue('diklat', JSON.stringify(val));
         },
       },
       pembiayaan: {
         type: DataTypes.STRING,
         get() {
-          return JSON.parse(this.getDataValue("pembiayaan"));
+          return JSON.parse(this.getDataValue('pembiayaan'));
         },
         set(val) {
-          return this.setDataValue("pembiayaan", JSON.stringify(val));
+          return this.setDataValue('pembiayaan', JSON.stringify(val));
         },
       },
       mitra: {
         type: DataTypes.STRING,
         get() {
-          return JSON.parse(this.getDataValue("mitra"));
+          return JSON.parse(this.getDataValue('mitra'));
         },
         set(val) {
-          return this.setDataValue("mitra", JSON.stringify(val));
+          return this.setDataValue('mitra', JSON.stringify(val));
         },
       },
       aturanRT: DataTypes.STRING,
@@ -138,28 +138,28 @@ module.exports = (sequelize, DataTypes) => {
       peraturanKhusus: {
         type: DataTypes.STRING,
         get() {
-          return JSON.parse(this.getDataValue("peraturanKhusus"));
+          return JSON.parse(this.getDataValue('peraturanKhusus'));
         },
         set(val) {
-          return this.setDataValue("peraturanKhusus", JSON.stringify(val));
+          return this.setDataValue('peraturanKhusus', JSON.stringify(val));
         },
       },
       SOP: {
         type: DataTypes.STRING,
         get() {
-          return JSON.parse(this.getDataValue("SOP"));
+          return JSON.parse(this.getDataValue('SOP'));
         },
         set(val) {
-          return this.setDataValue("SOP", JSON.stringify(val));
+          return this.setDataValue('SOP', JSON.stringify(val));
         },
       },
       SOM: {
         type: DataTypes.STRING,
         get() {
-          return JSON.parse(this.getDataValue("SOM"));
+          return JSON.parse(this.getDataValue('SOM'));
         },
         set(val) {
-          return this.setDataValue("SOM", JSON.stringify(val));
+          return this.setDataValue('SOM', JSON.stringify(val));
         },
       },
       penilaian: DataTypes.STRING,
@@ -170,8 +170,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Koperasi",
+      modelName: 'koperasi',
     }
   );
-  return Koperasi;
+  return koperasi;
 };

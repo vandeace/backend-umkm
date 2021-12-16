@@ -1,24 +1,25 @@
-const { Koperasi, User } = require("../models");
-const { Op } = require("sequelize");
+const model = require('../models');
+const { Op } = require('sequelize');
 
 exports.create = async (req, res) => {
   try {
     const role = req.user.role;
-    if (role == "admin") {
+    console.log(role, 'role');
+    if (role == 'admin') {
       return res
         .status(401)
-        .send({ message: "admin cant create data", status: false });
+        .send({ message: 'admin cant create data', status: false });
     } else {
       req.body.userId = req.user.id;
-      const newData = await Koperasi.create(req.body);
-      const findData = await Koperasi.findOne({
+      const newData = await model.koperasi.create(req.body);
+      const findData = await model.koperasi.findOne({
         where: { id: newData.id },
-        attributes: { exclude: ["createdAt", "updatedAt", "UserId", "userId"] },
+        attributes: { exclude: ['createdAt', 'updatedAt', 'UserId', 'userId'] },
       });
       return res.status(200).send({ data: findData, status: true });
     }
   } catch (error) {
-    res.status(500).send({ message: "Failed to create data!" });
+    res.status(500).send({ message: 'Failed to create data!' });
     console.log(error);
   }
 };
@@ -26,28 +27,28 @@ exports.create = async (req, res) => {
 exports.update = async (req, res) => {
   try {
     const userId = req.user.id;
-    const data = await Koperasi.findOne({
+    const data = await model.koperasi.findOne({
       where: { [Op.and]: [{ id: req.params.id }, { userId: userId }] },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "userId", "UserId"],
+        exclude: ['createdAt', 'updatedAt', 'userId', 'UserId'],
       },
     });
     if (data) {
-      await Koperasi.update(req.body, {
+      await model.koperasi.update(req.body, {
         where: { [Op.and]: [{ id: req.params.id }, { userId: userId }] },
       });
     } else {
-      res.status(404).send({ message: "Data Not Found" });
+      res.status(404).send({ message: 'Data Not Found' });
     }
-    const update = await Koperasi.findOne({
+    const update = await model.koperasi.findOne({
       where: { [Op.and]: [{ id: req.params.id }, { userId: userId }] },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "userId", "UserId"],
+        exclude: ['createdAt', 'updatedAt', 'userId', 'UserId'],
       },
     });
     res.send({ data: update });
   } catch (error) {
-    res.status(500).send({ message: "you failed to update data" });
+    res.status(500).send({ message: 'you failed to update data' });
     console.log(error);
   }
 };
@@ -55,14 +56,14 @@ exports.update = async (req, res) => {
 exports.destroy = async (req, res) => {
   try {
     const userId = req.user.id;
-    const data = await Koperasi.findOne({
+    const data = await model.koperasi.findOne({
       where: { [Op.and]: [{ id: req.params.id }, { userId: userId }] },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "userId", "UserId"],
+        exclude: ['createdAt', 'updatedAt', 'userId', 'UserId'],
       },
     });
     if (data) {
-      await Koperasi.destroy({
+      await model.koperasi.destroy({
         where: { id: req.params.id },
       });
       return res.status(200).send({
@@ -72,7 +73,7 @@ exports.destroy = async (req, res) => {
     } else {
       console.log(error);
       return res.status(500).send({
-        message: "Failed to delete data! data not found",
+        message: 'Failed to delete data! data not found',
         status: false,
       });
     }
@@ -80,44 +81,43 @@ exports.destroy = async (req, res) => {
     console.log(error);
     return res
       .status(500)
-      .send({ message: "Failed to delete data!", status: false });
+      .send({ message: 'Failed to delete data!', status: false });
   }
 };
 
 exports.show = async (req, res) => {
   try {
-    if (req.user.role === "admin") {
+    if (req.user.role === 'admin') {
+      console.log(req.query.dateStart, 'req.query.dateStart ');
+      console.log(req.query.dateEnd, 'req.query.dateEnd ');
       if (req.query.dateStart && req.query.dateEnd) {
+        console.log('run a');
         const start = new Date(req.query.dateStart);
         const end = new Date(req.query.dateEnd);
-        const data = await Koperasi.findAll({
+        const data = await model.koperasi.findAll({
           where: {
             tglRAT: { [Op.between]: [start, end] },
           },
           attributes: {
-            exclude: ["createdAt", "updatedAt", "userId", "UserId"],
+            exclude: [, 'updatedAt', 'userId', 'UserId'],
           },
         });
         return res.status(200).send({ data: data, status: true });
       } else {
-        console.log("jalan a");
-        const data = await Koperasi.findAll({
+        console.log('run b');
+        const data = await model.koperasi.findAll({
           attributes: {
-            exclude: ["createdAt", "updatedAt", "userId", "UserId"],
+            exclude: ['createdAt', 'updatedAt', 'userId', 'UserId'],
           },
         });
         return res.status(200).send({ data: data, status: true });
       }
     } else {
-      const x = new Date("2013-05-23");
-      const y = new Date("2013-05-23");
-      console.log(y, "y");
-      console.log(x, "x");
       const userId = req.user.id;
-      const data = await Koperasi.findAll({
+      const data = await model.koperasi.findAll({
         where: { userId: userId },
         attributes: {
-          exclude: ["createdAt", "updatedAt", "userId", "UserId"],
+          exclude: ['createdAt', 'updatedAt', 'userId', 'UserId'],
         },
       });
       return res.status(200).send({ data: data, status: true });
@@ -126,6 +126,6 @@ exports.show = async (req, res) => {
     console.log(error);
     return res
       .status(500)
-      .send({ message: "Failed to get data!", status: false });
+      .send({ message: 'Failed to get data!', status: false });
   }
 };

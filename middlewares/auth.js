@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken");
-const { User } = require("../models");
+const jwt = require('jsonwebtoken');
+const model = require('../models');
 
 //make authentication
 exports.protected = async (req, res, next) => {
@@ -8,20 +8,20 @@ exports.protected = async (req, res, next) => {
     let token;
     if (
       req.headers.authorization &&
-      req.headers.authorization.startsWith("Bearer")
+      req.headers.authorization.startsWith('Bearer')
     ) {
-      token = req.headers.authorization.split(" ")[1];
+      token = req.headers.authorization.split(' ')[1];
     }
-    console.log(token, "token");
     if (token) {
       //if token get make it to string
       const data = jwt.verify(token, process.env.JWT_SECRET);
+
       //verify token with secret key string
       //first search user is there user with id parameter
-      const findUser = await User.findOne({ where: { id: data.id } });
+      const findUser = await model.user.findOne({ where: { id: data.id } });
       if (!findUser) {
         //if user not found send error message
-        res.status(400).send({ message: "Invalid access token" });
+        res.status(400).send({ message: 'Invalid access token' });
       } else {
         //if user available send user id and token
         req.user = findUser;
@@ -30,7 +30,7 @@ exports.protected = async (req, res, next) => {
         next();
       }
     } else {
-      console.log("run this");
+      console.log('run this');
       res.status(401).send({ message: "you're unauthorized" });
     }
   } catch (error) {}
