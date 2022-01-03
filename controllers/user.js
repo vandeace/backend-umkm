@@ -5,7 +5,8 @@ const bcrypt = require('bcrypt');
 exports.update = async (req, res) => {
   try {
     const saltRounds = 10;
-    const userId = req.user.id;
+    const userId = req.body.userId;
+
     const data = await model.user.findOne({
       where: { id: userId },
       attributes: {
@@ -42,6 +43,7 @@ exports.update = async (req, res) => {
         exclude: ['createdAt', 'updatedAt'],
       },
     });
+
     res.send({ data: update, message: 'success update data', status: true });
   } catch (error) {
     res.status(500).send({ message: 'you failed to update data' });
