@@ -30,7 +30,6 @@ exports.protected = async (req, res, next) => {
         next();
       }
     } else {
-      console.log('run this');
       res.status(401).send({ message: "you're unauthorized" });
     }
   } catch (error) {}

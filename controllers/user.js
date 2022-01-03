@@ -64,3 +64,23 @@ exports.show = async (req, res) => {
     console.log(error);
   }
 };
+
+exports.list = async (req, res) => {
+  try {
+    if (req.user.role === 'user') {
+      res.status(500).send({ message: 'you not authorized' });
+    }
+    const data = await model.user.findAll({
+      where: {
+        role: 'user',
+      },
+      attributes: {
+        exclude: ['createdAt', 'updatedAt'],
+      },
+    });
+    res.send({ data: data, status: true });
+  } catch (error) {
+    res.status(500).send({ message: 'you failed to get data' });
+    console.log(error);
+  }
+};

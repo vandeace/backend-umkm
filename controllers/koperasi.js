@@ -129,3 +129,32 @@ exports.show = async (req, res) => {
       .send({ message: 'Failed to get data!', status: false });
   }
 };
+
+exports.detail = async (req, res) => {
+  try {
+    const data = await model.koperasi.findOne({
+      where: { id: req.params.id },
+      attributes: {
+        exclude: ['createdAt', 'updatedAt', 'userId', 'UserId'],
+      },
+    });
+    if (data) {
+      return res.status(200).send({
+        status: true,
+        message: `success get data id ${req.params.id}`,
+        data: data,
+      });
+    } else {
+      console.log(error);
+      return res.status(500).send({
+        message: 'Failed to get data! data not found',
+        status: false,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .send({ message: 'Failed to get data!', status: false });
+  }
+};

@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("koperasis", {
+    await queryInterface.createTable('koperasis', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,8 +11,8 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "users",
-          key: "id",
+          model: 'users',
+          key: 'id',
         },
       },
       namaKoperasi: {
@@ -23,6 +23,7 @@ module.exports = {
       },
       tanggalBadanHukum: {
         type: Sequelize.DATE,
+        allowNull: true,
       },
       jalan: {
         type: Sequelize.STRING,
@@ -65,6 +66,7 @@ module.exports = {
       },
       tglNonAktif: {
         type: Sequelize.DATE,
+        allowNull: true,
       },
       ketNonAktif: {
         type: Sequelize.STRING,
@@ -136,26 +138,33 @@ module.exports = {
       },
       tglRAT: {
         type: Sequelize.DATE,
+        allowNull: true,
       },
       modalSendiri: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       modalLuar: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       nilaiAset: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       volumeUsaha: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       SHU: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
+      },
+      diklatAnggota: {
+        type: Sequelize.STRING,
       },
       diklat: {
         type: Sequelize.STRING,
       },
       pembiayaan: {
+        type: Sequelize.STRING,
+      },
+      pemasaran: {
         type: Sequelize.STRING,
       },
       mitra: {
@@ -202,6 +211,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("koperasis");
+    await queryInterface.dropTable('koperasis');
   },
 };

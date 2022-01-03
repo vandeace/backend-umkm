@@ -1,30 +1,34 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const { login, register } = require("../controllers/auth");
+const { login, register } = require('../controllers/auth');
 const {
   update: updateDataUser,
   show: getUser,
-} = require("../controllers/user");
+  list: getUserList,
+} = require('../controllers/user');
 const {
   create: addData,
   update: updateData,
   destroy: deleteData,
   show: getData,
-} = require("../controllers/koperasi");
+  detail: getDetailData,
+} = require('../controllers/koperasi');
 
 //========MIDDLEWARE=======================
-const { protected } = require("../middlewares/auth");
+const { protected } = require('../middlewares/auth');
 
 //route user
-router.post("/login", login);
-router.post("/register", register);
-router.post("/update", protected, updateDataUser);
-router.get("/user", protected, getUser);
+router.post('/login', login);
+router.post('/register', register);
+router.post('/update', protected, updateDataUser);
+router.get('/user', protected, getUser);
+router.get('/users', protected, getUserList);
 
 //route koperasi
-router.get("/koperasi", protected, getData);
-router.post("/koperasi", protected, addData);
-router.post("/koperasi/:id", protected, updateData);
-router.delete("/koperasi/:id", protected, deleteData);
+router.get('/koperasi', protected, getData);
+router.post('/koperasi', protected, addData);
+router.post('/koperasi/:id', protected, updateData);
+router.get('/koperasi/:id', protected, getDetailData);
+router.delete('/koperasi/:id', protected, deleteData);
 
 module.exports = router;

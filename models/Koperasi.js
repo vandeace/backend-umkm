@@ -101,11 +101,12 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       tglRAT: DataTypes.STRING,
-      modalSendiri: DataTypes.INTEGER,
-      modalLuar: DataTypes.INTEGER,
-      nilaiAset: DataTypes.INTEGER,
-      volumeUsaha: DataTypes.INTEGER,
-      SHU: DataTypes.INTEGER,
+      modalSendiri: DataTypes.STRING,
+      modalLuar: DataTypes.STRING,
+      nilaiAset: DataTypes.STRING,
+      volumeUsaha: DataTypes.STRING,
+      SHU: DataTypes.STRING,
+      diklatAnggota: DataTypes.STRING,
       diklat: {
         type: DataTypes.STRING,
         get() {
@@ -122,6 +123,15 @@ module.exports = (sequelize, DataTypes) => {
         },
         set(val) {
           return this.setDataValue('pembiayaan', JSON.stringify(val));
+        },
+      },
+      pemasaran: {
+        type: DataTypes.STRING,
+        get() {
+          return JSON.parse(this.getDataValue('pemasaran'));
+        },
+        set(val) {
+          return this.setDataValue('pemasaran', JSON.stringify(val));
         },
       },
       mitra: {
